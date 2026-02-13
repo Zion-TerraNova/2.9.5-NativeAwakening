@@ -42,7 +42,7 @@ jobs:
           sha256sum zion-${{ matrix.target }}.tar.gz > zion-${{ matrix.target }}.tar.gz.sha256
 
       - name: Upload
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: zion-${{ matrix.target }}
           path: |

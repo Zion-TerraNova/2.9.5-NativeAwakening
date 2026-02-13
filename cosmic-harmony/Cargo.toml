@@ -64,7 +64,7 @@ blake2 = "0.10"
 typenum = "1.17"
 digest = "0.10"
 tiny-keccak = { version = "2.0", features = ["keccak"] }
-rand = "0.8"
+rand = "0.9"
 log = "0.4"
 hex = "0.4"
 chrono = { version = "0.4", features = ["serde"] }

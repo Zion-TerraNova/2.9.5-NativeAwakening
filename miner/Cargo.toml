@@ -1,0 +1,62 @@
+[package]
+name = "zion-miner"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "ZION Universal Miner - Multi-algorithm CPU+GPU mining"
+
+[features]
+default = []
+native-randomx = ["zion-cosmic-harmony-v3/native-randomx"]
+native-yescrypt = ["zion-cosmic-harmony-v3/native-yescrypt"]
+native-cosmic-harmony = ["zion-cosmic-harmony-v3/native-cosmic-harmony"]
+native-autolykos = ["zion-cosmic-harmony-v3/native-autolykos"]
+native-kawpow = ["zion-cosmic-harmony-v3/native-kawpow"]
+native-kawpow-gpu = ["zion-cosmic-harmony-v3/native-kawpow-gpu"]
+native-ethash = ["zion-cosmic-harmony-v3/native-ethash"]
+native-kheavyhash = ["zion-cosmic-harmony-v3/native-kheavyhash"]
+native-equihash = ["zion-cosmic-harmony-v3/native-equihash"]
+native-progpow = ["zion-cosmic-harmony-v3/native-progpow"]
+native-argon2d = ["zion-cosmic-harmony-v3/native-argon2d"]
+native-blake3 = ["zion-cosmic-harmony-v3/native-blake3"]
+native-all = [
+    "native-randomx", "native-yescrypt", "native-cosmic-harmony",
+    "native-autolykos", "native-kawpow", "native-kawpow-gpu",
+    "native-ethash", "native-kheavyhash", "native-equihash",
+    "native-progpow", "native-argon2d", "native-blake3"
+]
+# GPU backends
+gpu = ["zion-cosmic-harmony-v3/gpu"]
+metal = ["zion-cosmic-harmony-v3/metal"]
+cuda = []
+
+[dependencies]
+tokio = { version = "1.35", features = ["full"] }
+tokio-util = { version = "0.7", features = ["codec"] }
+futures = "0.3"
+reqwest = { version = "0.11", features = ["json"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+toml = "0.8"
+clap = { version = "4.4", features = ["derive", "color"] }
+colored = "2.1"
+log = "0.4"
+env_logger = "0.11"
+rayon = "1.8"
+crossbeam = "0.8"
+parking_lot = "0.12"
+sysinfo = "0.30"
+blake3 = "1.5"
+hex = "0.4"
+chrono = "0.4"
+num_cpus = "1.16"
+hostname = "0.3"
+dirs = "5.0"
+anyhow = "1.0"
+thiserror = "1.0"
+libc = "0.2"
+
+zion-core = { path = "../core" }
+zion-cosmic-harmony-v3 = { path = "../cosmic-harmony" }

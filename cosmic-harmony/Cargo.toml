@@ -1,0 +1,91 @@
+[package]
+name = "zion-cosmic-harmony-v3"
+version = "3.0.0"
+edition = "2021"
+authors = ["ZION Core Team <contact@zionterranova.com>"]
+description = "Cosmic Harmony v3 - Multi-Algorithm Mining Engine"
+license = "MIT"
+repository = "https://github.com/Zion-TerraNova/2.9.5-NativeAwakening"
+build = "build.rs"
+
+[lib]
+crate-type = ["lib", "cdylib"]
+
+[features]
+default = ["profit-router"]
+gpu = ["dep:opencl3"]
+profit-router = ["dep:reqwest"]
+metal = ["dep:metal"]
+cpu = ["dep:randomx-rs"]
+parallel = ["dep:rayon", "dep:num_cpus"]
+simd = []
+
+# Native library features
+native-randomx = []
+native-yescrypt = []
+native-cosmic-harmony = []
+native-autolykos = []
+native-kawpow = []
+native-kawpow-gpu = []
+native-ethash = []
+native-kheavyhash = []
+native-equihash = []
+native-progpow = []
+native-argon2d = []
+native-blake3 = []
+native-cosmic-harmony-v3 = []
+native-all = [
+    "native-randomx", "native-yescrypt", "native-cosmic-harmony",
+    "native-autolykos", "native-kawpow", "native-kawpow-gpu",
+    "native-ethash", "native-kheavyhash", "native-equihash",
+    "native-progpow", "native-argon2d", "native-blake3",
+    "native-cosmic-harmony-v3"
+]
+
+# Rust crate-based algorithms
+algo-ethash = ["dep:ethash"]
+algo-equihash = ["dep:equihash"]
+algo-argon2 = ["dep:argon2"]
+algo-kheavyhash = []
+algo-all = ["algo-ethash", "algo-equihash", "algo-argon2", "algo-kheavyhash"]
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+async-trait = "0.1"
+thiserror = "1.0"
+anyhow = "1.0"
+tracing = "0.1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha3 = "0.10"
+keccak = "0.1"
+blake3 = "1.5"
+blake2 = "0.10"
+typenum = "1.17"
+digest = "0.10"
+tiny-keccak = { version = "2.0", features = ["keccak"] }
+rand = "0.8"
+log = "0.4"
+hex = "0.4"
+chrono = { version = "0.4", features = ["serde"] }
+
+# Optional
+ethash = { version = "0.4", optional = true }
+equihash = { version = "0.2", optional = true }
+argon2 = { version = "0.5", optional = true }
+rayon = { version = "1.10", optional = true }
+num_cpus = { version = "1.16", optional = true }
+opencl3 = { version = "0.9", optional = true }
+metal = { version = "0.27", optional = true }
+randomx-rs = { version = "1.2", optional = true }
+reqwest = { version = "0.12", features = ["json"], optional = true }
+
+[dev-dependencies]
+tokio-test = "0.4"
+tracing-subscriber = "0.3"
+criterion = { version = "0.5", features = ["html_reports"] }
+rayon = "1.10"
+
+[[bench]]
+name = "algorithm_bench"
+harness = false

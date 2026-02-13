@@ -1,0 +1,70 @@
+# ZION DevNet Configuration (Local Development)
+
+[network]
+name = "devnet"
+chain_id = "zion-devnet-1"
+listen_addr = "127.0.0.1"
+p2p_port = 8334
+rpc_port = 8444
+
+[network.seeds]
+nodes = []
+
+[consensus]
+algorithm = "cosmic-harmony-v3"
+block_time_target = 60
+daa_type = "lwma"
+daa_window = 60
+daa_max_change_percent = 25
+max_reorg_depth = 10
+soft_finality = 60
+min_difficulty = 100
+
+[emission]
+block_reward_atomic = 5_400_067_000
+atomic_units_per_zion = 1_000_000
+max_mining_blocks = 23_652_000
+mining_supply = 127_720_000_000
+total_supply = 144_000_000_000
+halving = false
+
+[genesis]
+premine_total = 16_280_000_000
+# P1-37: Use same genesis timestamp as mainnet for consistency
+timestamp = 1704067200               # Jan 1, 2024 00:00:00 UTC
+
+[genesis.premine]
+oasis_golden_egg = 8_250_000_000     # ZION OASIS + Winners Golden Egg/Xp
+dao_treasury = 4_000_000_000
+# P1-37: Aligned with mainnet premine split
+infrastructure = 2_590_000_000
+humanitarian = 1_440_000_000
+
+[coinbase]
+maturity_blocks = 10  # Lower for fast dev testing
+
+[mempool]
+max_size_mb = 50
+min_fee_per_byte = 0  # Free txs in dev
+fee_policy = "burn"
+
+[storage]
+engine = "lmdb"
+data_dir = "./data/devnet"
+max_db_size_gb = 10
+
+[p2p]
+max_peers = 8
+max_inbound = 4
+max_outbound = 4
+ban_duration_secs = 60
+rate_limit_msgs_per_sec = 1000
+
+[rpc]
+enabled = true
+bind = "127.0.0.1:8444"
+max_connections = 10
+
+[logging]
+level = "trace"
+format = "pretty"

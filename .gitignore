@@ -1,0 +1,40 @@
+# Build artifacts
+/target/
+**/*.rs.bk
+*.pdb
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Node (if used for tooling)
+node_modules/
+package-lock.json
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+
+# Keys and secrets
+*.pem
+*.key
+*_key
+*.p12

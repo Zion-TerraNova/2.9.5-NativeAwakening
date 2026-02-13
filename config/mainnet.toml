@@ -1,0 +1,72 @@
+# ZION MainNet Configuration
+
+[network]
+name = "mainnet"
+chain_id = "zion-mainnet-1"
+listen_addr = "0.0.0.0"
+p2p_port = 8333
+rpc_port = 8443
+
+[network.seeds]
+nodes = [
+    "seed1.zionterranova.com:8333",
+    "seed2.zionterranova.com:8333",
+    "seed3.zionterranova.com:8333",
+]
+
+[consensus]
+algorithm = "cosmic-harmony-v3"
+block_time_target = 60
+daa_type = "lwma"
+daa_window = 60
+daa_max_change_percent = 25
+max_reorg_depth = 10
+soft_finality = 60
+min_difficulty = 1000
+
+[emission]
+block_reward_atomic = 5_400_067_000  # 5,400.067 ZION
+atomic_units_per_zion = 1_000_000
+max_mining_blocks = 23_652_000       # ~45 years
+mining_supply = 127_720_000_000      # ZION
+total_supply = 144_000_000_000       # ZION
+halving = false
+
+[genesis]
+premine_total = 16_280_000_000       # ZION
+timestamp = 1704067200               # Jan 1, 2024 00:00:00 UTC (immutable)
+
+[genesis.premine]
+oasis_golden_egg = 8_250_000_000     # ZION OASIS + Winners Golden Egg/Xp — Immediate (50.7%)
+dao_treasury = 4_000_000_000         # Immediate (24.6%)
+infrastructure = 2_590_000_000       # Immediate (15.9%)
+humanitarian = 1_440_000_000         # Immediate (8.8%)
+
+[coinbase]
+maturity_blocks = 100
+
+[mempool]
+max_size_mb = 300
+min_fee_per_byte = 1                 # atomic units
+fee_policy = "burn"                  # fees are burned
+
+[storage]
+engine = "lmdb"
+data_dir = "/data/zion"
+max_db_size_gb = 100
+
+[p2p]
+max_peers = 128
+max_inbound = 96
+max_outbound = 32
+ban_duration_secs = 3600
+rate_limit_msgs_per_sec = 100
+
+[rpc]
+enabled = true
+bind = "127.0.0.1:8443"
+max_connections = 100
+
+[logging]
+level = "info"
+format = "json"

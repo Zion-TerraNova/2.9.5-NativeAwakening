@@ -1,0 +1,70 @@
+[package]
+name = "zion-pool"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "ZION Mining Pool - Stratum v2, PPLNS"
+
+[features]
+default = []
+native-randomx = ["zion-cosmic-harmony-v3/native-randomx"]
+native-yescrypt = ["zion-cosmic-harmony-v3/native-yescrypt"]
+native-cosmic-harmony = ["zion-cosmic-harmony-v3/native-cosmic-harmony"]
+native-autolykos = ["zion-cosmic-harmony-v3/native-autolykos"]
+native-kawpow = ["zion-cosmic-harmony-v3/native-kawpow"]
+native-kawpow-gpu = ["zion-cosmic-harmony-v3/native-kawpow-gpu"]
+native-ethash = ["zion-cosmic-harmony-v3/native-ethash"]
+native-kheavyhash = ["zion-cosmic-harmony-v3/native-kheavyhash"]
+native-equihash = ["zion-cosmic-harmony-v3/native-equihash"]
+native-progpow = ["zion-cosmic-harmony-v3/native-progpow"]
+native-argon2d = ["zion-cosmic-harmony-v3/native-argon2d"]
+native-blake3 = ["zion-cosmic-harmony-v3/native-blake3"]
+native-all = [
+    "native-randomx", "native-yescrypt", "native-cosmic-harmony",
+    "native-autolykos", "native-kawpow", "native-ethash",
+    "native-kheavyhash", "native-equihash", "native-progpow",
+    "native-argon2d", "native-blake3"
+]
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+anyhow = "1"
+thiserror = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+redis = { version = "0.24", features = ["aio", "tokio-comp", "connection-manager"] }
+prometheus = { version = "0.14", default-features = false }
+hyper = { version = "1", features = ["client"] }
+hyper-util = { version = "0.1", features = ["client-legacy", "http1", "tokio"] }
+http-body-util = { version = "0.1" }
+bytes = "1"
+axum = "0.7"
+rust_decimal = "1.33"
+rust_decimal_macros = "1.33"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+uuid = { version = "1", features = ["v4", "serde"] }
+hex = "0.4"
+sha3 = "0.10"
+chrono = { version = "0.4", features = ["serde"] }
+tokio-postgres = { version = "0.7", features = ["with-chrono-0_4"] }
+reqwest = { version = "0.12", features = ["json"] }
+socket2 = "0.5"
+ed25519-dalek = { version = "2", features = ["std"] }
+
+zion-core = { path = "../core" }
+zion-cosmic-harmony-v3 = { path = "../cosmic-harmony" }
+
+[dev-dependencies]
+criterion = { version = "0.5", features = ["async_tokio"] }
+rayon = "1.7"
+
+[[bench]]
+name = "share_validation"
+harness = false
+
+[[bench]]
+name = "load_test"
+harness = false

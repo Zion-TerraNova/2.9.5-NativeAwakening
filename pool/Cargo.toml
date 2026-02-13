@@ -31,7 +31,7 @@ native-all = [
 [dependencies]
 tokio = { version = "1", features = ["full"] }
 anyhow = "1"
-thiserror = "1"
+thiserror = "2"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 redis = { version = "0.24", features = ["aio", "tokio-comp", "connection-manager"] }

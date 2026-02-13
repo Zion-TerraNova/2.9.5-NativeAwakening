@@ -46,7 +46,7 @@ log = "0.4"
 
 [dev-dependencies]
 criterion = { version = "0.5", features = ["html_reports"] }
-tempfile = "3.8"
+tempfile = "3.25"
 # AUDIT-FIX P1-06: Integration tests need dev-tools to access test-only methods
 zion-core = { path = ".", features = ["dev-tools"] }
 

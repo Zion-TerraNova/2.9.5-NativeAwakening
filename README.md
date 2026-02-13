@@ -47,19 +47,24 @@ sudo mv zion-miner-macos-arm64 /usr/local/bin/zion-miner
 ### 3. Mine
 
 ```bash
-zion-miner --wallet YOUR_ZION_ADDRESS
+zion-miner --pool stratum+tcp://pool.zionterranova.com:3333 --wallet YOUR_ZION_ADDRESS
 ```
 
-That's it! 🎉 The miner connects to the default RPC endpoint and starts mining with **Cosmic Harmony v3**.
+That's it! 🎉 The miner connects to the public ZION pool and starts mining with **Cosmic Harmony v3**.
 
 ### Options
 
 ```
+--pool <URL>            [REQUIRED] Pool URL (stratum+tcp://host:port)
 --wallet <ADDRESS>      [REQUIRED] Your ZION wallet address
---rpc-url <URL>         RPC endpoint (default: http://127.0.0.1:8080/jsonrpc)
 --algorithm <ALGO>      cosmic_harmony | randomx | yescrypt | blake3
---poll-interval <SEC>   Polling interval in seconds (default: 5)
+--threads <N>           CPU threads (0 = auto-detect all cores)
+--gpu                   Enable GPU mining (Metal/CUDA/OpenCL)
+--ncl                   Enable Neural Compute Layer (AI bonus)
 ```
+
+**Public Pool:** `stratum+tcp://pool.zionterranova.com:3333`  
+**Public Node RPC:** `https://node.zionterranova.com/jsonrpc`
 
 > 📖 **Detailed guide (CZ/EN):** [docs/MINING_GUIDE.md](docs/MINING_GUIDE.md)
 

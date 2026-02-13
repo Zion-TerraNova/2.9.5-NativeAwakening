@@ -198,10 +198,10 @@ ZION Cosmic Harmony v3 automaticky rotuje mezi algoritmy:
 
 ```bash
 # Doporučeno — nechte Cosmic Harmony rozhodnout
-zion-miner --wallet VAŠE_ADRESA --algorithm cosmic_harmony
+zion-miner --pool stratum+tcp://pool.zionterranova.com:3333 --wallet VAŠE_ADRESA --algorithm cosmic_harmony
 
 # Specifický algoritmus (pro pokročilé)
-zion-miner --wallet VAŠE_ADRESA --algorithm randomx
+zion-miner --pool stratum+tcp://pool.zionterranova.com:3333 --wallet VAŠE_ADRESA --algorithm randomx
 ```
 
 > 💡 **Doporučení:** Ponechte výchozí `cosmic_harmony`. Systém automaticky vybere optimální algoritmus.
@@ -223,8 +223,9 @@ After=network.target
 Type=simple
 User=zionminer
 ExecStart=/usr/local/bin/zion-miner \
+  --pool stratum+tcp://pool.zionterranova.com:3333 \
   --wallet VAŠE_ZION_ADRESA \
-  --rpc-url http://127.0.0.1:8080/jsonrpc
+  --threads 0
 Restart=always
 RestartSec=10
 
@@ -255,12 +256,12 @@ sudo journalctl -u zion-miner -f
 ```bash
 # S tmux
 tmux new -s miner
-zion-miner --wallet VAŠE_ADRESA
+zion-miner --pool stratum+tcp://pool.zionterranova.com:3333 --wallet VAŠE_ADRESA
 # Ctrl+B, pak D pro odpojení
 
 # S screen
 screen -S miner
-zion-miner --wallet VAŠE_ADRESA
+zion-miner --pool stratum+tcp://pool.zionterranova.com:3333 --wallet VAŠE_ADRESA
 # Ctrl+A, pak D pro odpojení
 ```
 
@@ -282,17 +283,20 @@ xattr -d com.apple.quarantine zion-miner-macos-arm64
 
 Nebo: **System Settings → Privacy & Security → Allow Anyway**
 
-### "Connection refused" / "RPC error"
+### "Connection refused" / "Pool error"
 
-Miner se nemůže připojit k ZION node. Zkontrolujte:
+Miner se nemůže připojit k poolu. Zkontrolujte:
 
-1. Je ZION node spuštěný? (`curl http://127.0.0.1:8080/jsonrpc`)
-2. Používáte správnou `--rpc-url`?
-3. Je firewall otevřený na portu 8080?
+1. Máte správnou adresu poolu? (`pool.zionterranova.com:3333`)
+2. Je firewall otevřený pro odchozí TCP na portu 3333?
+3. Máte internetové připojení?
 
 ```bash
-# Test připojení k veřejnému node
-zion-miner --wallet VAŠE_ADRESA --rpc-url http://node.zionterranova.com:8080/jsonrpc
+# Test TCP připojení k poolu
+nc -zv pool.zionterranova.com 3333
+
+# Pokud nefunguje, zkuste přes IP
+zion-miner --pool stratum+tcp://77.42.31.72:3333 --wallet VAŠE_ADRESA
 ```
 
 ### "GLIBC not found" (starší Linux)
@@ -313,7 +317,7 @@ Binárka vyžaduje moderní Linux. Pokud vidíte chybu s GLIBC:
 
 ### Potřebuji vlastní ZION node?
 
-**Ne nutně.** Pro začátek můžete použít veřejný RPC endpoint. Pro lepší výkon a decentralizaci doporučujeme spustit vlastní node.
+**Ne.** Stačí se připojit na veřejný pool `pool.zionterranova.com:3333`. Pool se stará o komunikaci s blockchainem za vás. Vlastní node je potřeba pouze pokud chcete provozovat vlastní pool nebo solo mining.
 
 ### Kolik vydělám?
 

@@ -51,7 +51,7 @@ sha3 = "0.10"
 chrono = { version = "0.4", features = ["serde"] }
 tokio-postgres = { version = "0.7", features = ["with-chrono-0_4"] }
 reqwest = { version = "0.12", features = ["json"] }
-socket2 = "0.5"
+socket2 = "0.6"
 ed25519-dalek = { version = "2", features = ["std"] }
 
 zion-core = { path = "../core" }

@@ -19,6 +19,8 @@
 7. [Pokročilá konfigurace](#-pokročilá-konfigurace)
 8. [Řešení problémů](#-řešení-problémů)
 9. [FAQ](#-faq)
+10. [Kompletní návod od 0 — Laik](#-kompletní-návod-od-0--laik)
+11. [Kompletní návod — Profi](#-kompletní-návod--profi-node--wallet--miner)
 
 ---
 
@@ -153,33 +155,36 @@ zion-miner --version
 
 ## 🚀 Konfigurace a spuštění
 
-### Základní příkaz — Solo mining
+### Základní příkaz — Pool mining (doporučeno)
 
 ```bash
-zion-miner --wallet VAŠE_ZION_ADRESA
+zion-miner --pool stratum+tcp://pool.zionterranova.com:3333 --wallet VAŠE_ZION_ADRESA
 ```
 
-To je vše! Miner se připojí k výchozímu RPC endpointu a začne těžit s algoritmem **Cosmic Harmony**.
+To je vše! Miner se připojí na veřejný pool a začne těžit s algoritmem **Cosmic Harmony**.
 
-### Příklad s vlastním RPC
+### Příklad s vlákny + algoritmem
 
 ```bash
 zion-miner \
+  --pool stratum+tcp://pool.zionterranova.com:3333 \
   --wallet zion1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh \
-  --rpc-url http://node.zionterranova.com:8080/jsonrpc
+  --threads 4 \
+  --algorithm cosmic_harmony
 ```
 
 ### Všechny dostupné parametry
 
 | Parametr | Popis | Výchozí hodnota |
 |----------|-------|-----------------|
-| `--wallet` | **[POVINNÝ]** Vaše ZION adresa pro odměny | — |
-| `--rpc-url` | URL adresa ZION node RPC | `http://127.0.0.1:8080/jsonrpc` |
-| `--algorithm` | Algoritmus těžby | `cosmic_harmony` |
-| `--max-iterations` | Maximum iterací na pokus | `10000000` |
-| `--poll-interval` | Interval dotazování v sekundách | `5` |
-| `--help` | Zobrazí nápovědu | — |
-| `--version` | Zobrazí verzi | — |
+| `--pool` / `-p` | **[POVINNÝ]** URL poolu (stratum+tcp://host:port) | — |
+| `--wallet` / `-w` | **[POVINNÝ]** Vaše ZION adresa | — |
+| `--algorithm` / `-a` | Algoritmus těžby | `cosmic_harmony` |
+| `--threads` / `-t` | Počet CPU vláken (0 = auto) | `0` |
+| `--gpu` | Zapnutí GPU režimu | vypnuto |
+| `--ncl` | Neural Compute Layer bonus | vypnuto |
+| `--help` / `-h` | Zobrazí nápovědu | — |
+| `--version` / `-V` | Zobrazí verzi | — |
 
 ---
 
@@ -325,7 +330,7 @@ Záleží na výkonu vašeho CPU a aktuální obtížnosti sítě. Blok je nalez
 
 ### Je to bezpečné?
 
-Ano. Miner pouze počítá hashe a komunikuje s ZION node přes RPC. Nepotřebuje přístup k vašemu privátnímu klíči — pouze veřejnou wallet adresu.
+Ano. Miner pouze počítá hashe a komunikuje s poolem. Nepotřebuje přístup k vašemu privátnímu klíči — pouze veřejnou wallet adresu.
 
 ### Mohu těžit na Raspberry Pi?
 
@@ -334,6 +339,129 @@ Ano! Stáhněte verzi `zion-miner-linux-arm64`. Raspberry Pi 4/5 zvládne těžb
 ### Kde získám ZION wallet adresu?
 
 Navštivte [zionterranova.com](https://zionterranova.com) nebo se zeptejte na [Discordu](https://discord.gg/zion-terranova).
+
+---
+
+## 🧭 Kompletní návod od 0 — Laik
+
+### 1) Co stáhnout
+
+Z release stáhni 3 věci pro svůj OS:
+- `zion-wallet-*` (vytvoření adresy)
+- `zion-miner-*` (těžba)
+- `zion-node-*` (volitelné, pokud chceš vlastní node)
+
+### 2) Vytvoření wallet adresy
+
+```bash
+zion-wallet gen-mnemonic --out my-wallet.json --print
+```
+
+Ulož si bezpečně:
+- 24 slov (mnemonic)
+- soubor `my-wallet.json`
+
+### 3) Spuštění těžby (nejjednodušší)
+
+```bash
+zion-miner --pool stratum+tcp://pool.zionterranova.com:3333 --wallet TVOJE_ZION_ADRESA
+```
+
+### 4) Kontrola zůstatku
+
+```bash
+zion-wallet balance --address TVOJE_ZION_ADRESA --node https://node.zionterranova.com
+```
+
+### 5) Odeslání transakce
+
+```bash
+zion-wallet send --wallet my-wallet.json --to zion1PRIJEMCE --amount 10 --node https://node.zionterranova.com
+```
+
+---
+
+## 🛠️ Kompletní návod — Profi (Node + Wallet + Miner)
+
+### A) Spuštění vlastního node
+
+```bash
+./zion-node-linux-x86_64 \
+  --network mainnet \
+  --rpc-port 8444 \
+  --p2p-port 8334 \
+  --data-dir ./data/zion-core-v1
+```
+
+### B) Health check node
+
+```bash
+curl -s http://127.0.0.1:8444/jsonrpc \
+  -H 'Content-Type: application/json' \
+  -d '{"jsonrpc":"2.0","method":"get_info","params":{},"id":1}'
+```
+
+### C) Wallet operations
+
+```bash
+# wallet info
+zion-wallet info --wallet my-wallet.json
+
+# sign / verify
+zion-wallet sign --wallet my-wallet.json --message-hex deadbeef
+zion-wallet verify --public-key-hex PUBKEY_HEX --message-hex deadbeef --signature-hex SIG_HEX
+```
+
+### D) Miner proti vlastní infrastruktuře
+
+```bash
+# doporučeno: veřejný pool
+zion-miner --pool stratum+tcp://pool.zionterranova.com:3333 --wallet TVOJE_ZION_ADRESA --threads 0
+```
+
+### E) systemd služby (node + miner)
+
+Node service (`/etc/systemd/system/zion-node.service`):
+
+```ini
+[Unit]
+Description=ZION Core Node
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/zion-node-linux-x86_64 --network mainnet --rpc-port 8444 --p2p-port 8334 --data-dir /var/lib/zion
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Miner service (`/etc/systemd/system/zion-miner.service`):
+
+```ini
+[Unit]
+Description=ZION Miner
+After=network.target zion-node.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/zion-miner --pool stratum+tcp://pool.zionterranova.com:3333 --wallet TVOJE_ZION_ADRESA --threads 0
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Aktivace:
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable --now zion-node zion-miner
+sudo systemctl status zion-node zion-miner
+```
 
 ---
 

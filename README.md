@@ -70,6 +70,29 @@ That's it! 🎉 The miner connects to the public ZION pool and starts mining wit
 
 ---
 
+## 💰 Wallet CLI — Generate & Manage Your Wallet
+
+```bash
+# Generate a new wallet (24-word mnemonic)
+zion-wallet gen-mnemonic --print
+
+# Check balance
+zion-wallet balance --address zion1your_address --node https://node.zionterranova.com
+
+# Send ZION
+zion-wallet send --to zion1recipient --amount 100 --node https://node.zionterranova.com
+```
+
+Download from **[Releases](https://github.com/Zion-TerraNova/2.9.5-NativeAwakening/releases)**:
+
+| Binary | Platform |
+|--------|----------|
+| `zion-wallet-linux-x86_64` | Linux Intel/AMD |
+| `zion-wallet-linux-arm64` | Linux ARM64 |
+| `zion-wallet-macos-arm64` | macOS Apple Silicon |
+
+---
+
 ## 📁 Repository Contents
 
 ```
@@ -77,10 +100,16 @@ That's it! 🎉 The miner connects to the public ZION pool and starts mining wit
 │   ├── MINING_GUIDE.md              # 📖 Detailed mining guide (CZ/EN)
 │   ├── MAINNET_CONSTITUTION.md      # 🏛️ Mainnet constitution
 │   └── whitepaper-v2.9.5/           # 📄 Whitepaper chapters
-├── releases/                        # ⛏️ Pre-compiled miner binaries
-│   ├── zion-miner-linux-x86_64      #     Linux Intel/AMD
-│   ├── zion-miner-linux-arm64       #     Linux ARM64
-│   └── zion-miner-macos-arm64       #     macOS Apple Silicon
+├── releases/                        # ⛏️ Pre-compiled binaries
+│   ├── zion-miner-linux-x86_64      #     Miner — Linux Intel/AMD
+│   ├── zion-miner-linux-arm64       #     Miner — Linux ARM64
+│   ├── zion-miner-macos-arm64       #     Miner — macOS Apple Silicon
+│   ├── zion-node-linux-x86_64       #     Node — Linux Intel/AMD
+│   ├── zion-node-linux-arm64        #     Node — Linux ARM64
+│   ├── zion-node-macos-arm64        #     Node — macOS Apple Silicon
+│   ├── zion-wallet-linux-x86_64     #     Wallet — Linux Intel/AMD
+│   ├── zion-wallet-linux-arm64      #     Wallet — Linux ARM64
+│   └── zion-wallet-macos-arm64      #     Wallet — macOS Apple Silicon
 ├── LICENSE                          # MIT License
 ├── README.md                        # This file
 └── ROADMAP.md                       # Development roadmap
@@ -91,6 +120,7 @@ That's it! 🎉 The miner connects to the public ZION pool and starts mining wit
 ## 📖 Documentation
 
 - **[Mining Guide](docs/MINING_GUIDE.md)** — Step-by-step for beginners (Czech & English)
+- **[Node + Wallet + Mining (Laik + Profi)](docs/MINING_GUIDE.md#-kompletní-návod-od-0--laik)** — Full practical runbook
 - **[Whitepaper v2.9.5](docs/whitepaper-v2.9.5/README.md)** — Technical whitepaper
 - **[Mainnet Constitution](docs/MAINNET_CONSTITUTION.md)** — Governance rules
 - **[Roadmap](ROADMAP.md)** — Development milestones

@@ -27,6 +27,7 @@ Go to **[Releases](https://github.com/Zion-TerraNova/2.9.5-NativeAwakening/relea
 
 | Binary | Platform |
 |--------|----------|
+| `zion-miner-windows-x86_64.exe` | Windows 11 / 10 — x64 |
 | `zion-miner-linux-x86_64` | Linux — Intel / AMD (most servers & PCs) |
 | `zion-miner-linux-arm64` | Linux — ARM64 (Raspberry Pi, Oracle Cloud, AWS Graviton) |
 | `zion-miner-macos-arm64` | macOS — Apple Silicon (M1/M2/M3/M4) |
@@ -42,6 +43,12 @@ sudo mv zion-miner-linux-x86_64 /usr/local/bin/zion-miner
 chmod +x zion-miner-macos-arm64
 xattr -d com.apple.quarantine zion-miner-macos-arm64
 sudo mv zion-miner-macos-arm64 /usr/local/bin/zion-miner
+```
+
+```powershell
+# Windows 11 / 10 (PowerShell)
+Rename-Item .\zion-miner-windows-x86_64.exe zion-miner.exe
+.\zion-miner.exe --version
 ```
 
 ### 3. Mine
@@ -87,9 +94,35 @@ Download from **[Releases](https://github.com/Zion-TerraNova/2.9.5-NativeAwakeni
 
 | Binary | Platform |
 |--------|----------|
+| `zion-wallet-windows-x86_64.exe` | Windows 11 / 10 — x64 |
 | `zion-wallet-linux-x86_64` | Linux Intel/AMD |
 | `zion-wallet-linux-arm64` | Linux ARM64 |
 | `zion-wallet-macos-arm64` | macOS Apple Silicon |
+
+---
+
+## 🌐 Node CLI — Run Your Own Full Node
+
+```bash
+# Start a full node
+zion-node --network mainnet --rpc-port 8444 --p2p-port 8334 --data-dir ./data/zion
+
+# Check node status
+curl -s http://127.0.0.1:8444/jsonrpc \
+  -H 'Content-Type: application/json' \
+  -d '{"jsonrpc":"2.0","method":"get_info","params":{},"id":1}'
+```
+
+Download from **[Releases](https://github.com/Zion-TerraNova/2.9.5-NativeAwakening/releases)**:
+
+| Binary | Platform |
+|--------|----------|
+| `zion-node-windows-x86_64.exe` | Windows 11 / 10 — x64 |
+| `zion-node-linux-x86_64` | Linux Intel/AMD |
+| `zion-node-linux-arm64` | Linux ARM64 |
+| `zion-node-macos-arm64` | macOS Apple Silicon |
+
+> 💡 Running a node is **optional** for miners. The public pool handles blockchain communication. Run a node if you want to verify transactions independently or support decentralization.
 
 ---
 
@@ -104,12 +137,15 @@ Download from **[Releases](https://github.com/Zion-TerraNova/2.9.5-NativeAwakeni
 │   ├── zion-miner-linux-x86_64      #     Miner — Linux Intel/AMD
 │   ├── zion-miner-linux-arm64       #     Miner — Linux ARM64
 │   ├── zion-miner-macos-arm64       #     Miner — macOS Apple Silicon
+│   ├── zion-miner-windows-x86_64.exe #    Miner — Windows x64
 │   ├── zion-node-linux-x86_64       #     Node — Linux Intel/AMD
 │   ├── zion-node-linux-arm64        #     Node — Linux ARM64
 │   ├── zion-node-macos-arm64        #     Node — macOS Apple Silicon
+│   ├── zion-node-windows-x86_64.exe #     Node — Windows x64
 │   ├── zion-wallet-linux-x86_64     #     Wallet — Linux Intel/AMD
 │   ├── zion-wallet-linux-arm64      #     Wallet — Linux ARM64
-│   └── zion-wallet-macos-arm64      #     Wallet — macOS Apple Silicon
+│   ├── zion-wallet-macos-arm64      #     Wallet — macOS Apple Silicon
+│   └── zion-wallet-windows-x86_64.exe #   Wallet — Windows x64
 ├── LICENSE                          # MIT License
 ├── README.md                        # This file
 └── ROADMAP.md                       # Development roadmap
@@ -119,8 +155,10 @@ Download from **[Releases](https://github.com/Zion-TerraNova/2.9.5-NativeAwakeni
 
 ## 📖 Documentation
 
-- **[Mining Guide](docs/MINING_GUIDE.md)** — Step-by-step for beginners (Czech & English)
-- **[Node + Wallet + Mining (Laik + Profi)](docs/MINING_GUIDE.md#-kompletní-návod-od-0--laik)** — Full practical runbook
+- **[Complete Guide — Beginner + Pro](docs/MINING_GUIDE.md)** — Wallet, Miner, Node (CZ/EN, Windows/Linux/macOS)
+- **[Beginner Quick Start](docs/MINING_GUIDE.md#-quick-start--5-minut-do-těžby)** — 5 minutes to mining
+- **[Pro Runbook](docs/MINING_GUIDE.md#-infrastruktura--systemd-služby)** — systemd, nginx, monitoring, security
+- **[CLI Reference](docs/MINING_GUIDE.md#-cli-reference)** — All commands & parameters
 - **[Whitepaper v2.9.5](docs/whitepaper-v2.9.5/README.md)** — Technical whitepaper
 - **[Mainnet Constitution](docs/MAINNET_CONSTITUTION.md)** — Governance rules
 - **[Roadmap](ROADMAP.md)** — Development milestones
